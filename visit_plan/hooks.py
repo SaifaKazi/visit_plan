@@ -137,13 +137,39 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+    "Sales Order": {
+        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+    },
+    "Sales Invoice": {
+        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+    },
+    "Quotation": {
+        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+    },
+    "Delivery Note": {
+        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+    },
+    "Purchase Order": {
+        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+    },
+    "Purchase Receipt": {
+        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+    },
+    "Purchase Invoice": {
+        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+    },
+    "Stock Entry": {
+        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+    },
+    "Payment Entry": {
+        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+    },
+    "Journal Entry": {
+        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+    }
+}
+
 
 # Scheduled Tasks
 # ---------------

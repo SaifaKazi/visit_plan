@@ -138,13 +138,10 @@ app_license = "mit"
 # Hook on document methods and events
 
 doc_events = {
+   "Sales Invoice": {
+        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+    },
     "Sales Order": {
-        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
-    },
-    "Sales Invoice": {
-        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
-    },
-    "Quotation": {
         "before_save": "visit_plan.public.py.cost_center.set_cost_center"
     },
     "Delivery Note": {
@@ -159,13 +156,7 @@ doc_events = {
     "Purchase Invoice": {
         "before_save": "visit_plan.public.py.cost_center.set_cost_center"
     },
-    "Stock Entry": {
-        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
-    },
     "Payment Entry": {
-        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
-    },
-    "Journal Entry": {
         "before_save": "visit_plan.public.py.cost_center.set_cost_center"
     }
 }

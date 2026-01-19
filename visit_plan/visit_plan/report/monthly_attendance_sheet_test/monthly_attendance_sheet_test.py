@@ -12,7 +12,7 @@ from frappe.utils import cint, cstr, getdate
 from frappe.utils.nestedset import get_descendants_of
   
 Filters = frappe._dict
-
+  
 status_map = {
 	"Present": "P",
 	"Absent": "A",

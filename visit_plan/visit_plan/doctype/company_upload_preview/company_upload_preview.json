@@ -1,0 +1,67 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-12-15 18:41:45.135222",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "link_lkum",
+  "record_list",
+  "file_preview",
+  "section_break_pdvc",
+  "company_child"
+ ],
+ "fields": [
+  {
+   "fieldname": "link_lkum",
+   "fieldtype": "Link",
+   "label": "Test Web Form",
+   "options": "Test Web Form"
+  },
+  {
+   "fieldname": "file_preview",
+   "fieldtype": "HTML",
+   "in_preview": 1,
+   "label": "File Preview"
+  },
+  {
+   "fieldname": "record_list",
+   "fieldtype": "HTML",
+   "label": "Record List"
+  },
+  {
+   "fieldname": "section_break_pdvc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "company_child",
+   "fieldtype": "Table",
+   "label": "Company Child",
+   "options": "Company Child"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-01-06 11:22:10.762473",
+ "modified_by": "Administrator",
+ "module": "Visit Plan",
+ "name": "Company Upload Preview",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

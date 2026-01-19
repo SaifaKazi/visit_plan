@@ -27,6 +27,10 @@ app_license = "mit"
 # include js, css files in header of desk.html
 # app_include_css = "/assets/visit_plan/css/visit_plan.css"
 # app_include_js = "/assets/visit_plan/js/visit_plan.js"
+app_include_js = [
+    "/assets/visit_plan/js/hide_item_name_global.js"
+]
+
 
 # include js, css files in header of web template
 # web_include_css = "/assets/visit_plan/css/visit_plan.css"
@@ -43,7 +47,10 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+    "Prospect" : "public/js/prospect.js",
+    # "Sales Order" : "public/js/hide_item_name_global.js"
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -139,7 +146,8 @@ app_license = "mit"
 
 doc_events = {
    "Sales Invoice": {
-        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+        "before_save": "visit_plan.public.py.cost_center.set_cost_center",
+        "on_submit": "visit_plan.public.py.sales_invoice.send_invoice_email"
     },
     "Sales Order": {
         "before_save": "visit_plan.public.py.cost_center.set_cost_center"
@@ -158,7 +166,17 @@ doc_events = {
     },
     "Payment Entry": {
         "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+    },
+    "Stock Reconciliation": {
+        "before_save": "visit_plan.public.py.cost_center.set_cost_center"
+    },
+    "Item": {
+        "validate": "visit_plan.public.py.item.validate_item_accounts"
+    },
+    "Journal Entry": {
+        "validate": "visit_plan.public.py.journal_entry.validate_cost_center_balance"
     }
+
 }
 
 
@@ -194,10 +212,13 @@ doc_events = {
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "visit_plan.event.get_events"
 # }
-#
+# override_whitelisted_methods = {
+#     "frappe.printing.doctype.print_format.print_format.get_print_format": "visit_plan.api.dynamic_print_format.custom_get_print_format"
+# }
+#/home/sanpra/bench-steel/apps/visit_plan/visit_plan/api/dynamic_print_format.py
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
-# along with any modifications made in other Frappe apps
+# along with any modifications made in other Frappe apps 
 # override_doctype_dashboards = {
 # 	"Task": "visit_plan.task.get_dashboard_data"
 # }

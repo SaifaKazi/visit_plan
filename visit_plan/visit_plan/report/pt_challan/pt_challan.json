@@ -1,0 +1,37 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "creation": "2025-12-19 16:49:52.837464",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Test Letter Head",
+ "letterhead": null,
+ "modified": "2025-12-19 16:49:52.837464",
+ "modified_by": "Administrator",
+ "module": "Visit Plan",
+ "name": "PT Challan",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Salary Slip",
+ "report_name": "PT Challan",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "HR User"
+  },
+  {
+   "role": "Employee"
+  },
+  {
+   "role": "HR Manager"
+  },
+  {
+   "role": "Employee Self Service"
+  }
+ ],
+ "timeout": 0
+}

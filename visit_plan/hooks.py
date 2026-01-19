@@ -137,7 +137,7 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-doc_events = {
+doc_events = {  
    "Sales Invoice": {
         "before_save": "visit_plan.public.py.cost_center.set_cost_center"
     },

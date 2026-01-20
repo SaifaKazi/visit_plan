@@ -13,29 +13,29 @@ def execute(filters=None):
 def get_columns():
     return [
         {
-            "label": "Customer",
-            "fieldname" : "customer",
-            "fieldtype" : "Data",
-            "width" :150
+            "label": "Supplier",
+            "fieldname": "supplier",
+            "fieldtype": "Data",
+            "width": 150
         },
         {
-            "label": "Sales Invoice Date",
-            "fieldname": "sales_invoice_date",
+            "label": "Purchase Invoice Date",
+            "fieldname": "purchase_invoice_date",
             "fieldtype": "Date",
             "width": 150
         },
         {
-            "label": "Sales Invoice",
-            "fieldname": "sales_invoice",
+            "label": "Purchase Invoice",
+            "fieldname": "purchase_invoice",
             "fieldtype": "Link",
-            "options": "Sales Invoice",
+            "options": "Purchase Invoice",
             "width": 150
         },
         {
-            "label": "Sales Invoice Total Amt",
-            "fieldname": "si_total",
+            "label": "Purchase Invoice Total Amt",
+            "fieldname": "pi_total",
             "fieldtype": "Currency",
-            "width": 180
+            "width": 200
         },
         {
             "label": "Payment Date",
@@ -57,45 +57,50 @@ def get_columns():
             "width": 150
         },
         {
-            "label" : "Outstanding Amount",
-            "fieldname" : "outstanding_amount",
-            "fieldtype" : "Currency",
-            "width" : 150
+            "label": "Outstanding Amount",
+            "fieldname": "outstanding_amount",
+            "fieldtype": "Currency",
+            "width": 150
         }
     ]
+
 
 def get_data(filters=None):
     rows = []
     filters = filters or {}
     invoice_filters = {"docstatus": 1}
 
-    # 🔹 Posting Date filter (From Date – To Date)
+    # Date filter
     if filters.get("from_date") and filters.get("to_date"):
         invoice_filters["posting_date"] = [
             "between",
             [filters.get("from_date"), filters.get("to_date")]
         ]
-    # 🔹 Customer filter
+
+    # Supplier filter
     if filters.get("party"):
-        invoice_filters["customer"] = filters.get("party")
-    # 🔹 Fetch Sales Invoices (posting_date wise)
-    sales_invoices = frappe.get_all(
-        "Sales Invoice",
+        invoice_filters["supplier"] = filters.get("party")
+
+    # Fetch Purchase Invoices
+    purchase_invoices = frappe.get_all(
+        "Purchase Invoice",
         filters=invoice_filters,
-        fields=["name", "customer", "posting_date","rounded_total"],
+        fields=["name", "supplier", "posting_date", "rounded_total"],
         order_by="posting_date asc"
     )
-    for si in sales_invoices:
+
+    for pi in purchase_invoices:
         payment_refs = frappe.get_all(
             "Payment Entry Reference",
             filters={
-                "reference_doctype": "Sales Invoice",
-                "reference_name": si.name
+                "reference_doctype": "Purchase Invoice",
+                "reference_name": pi.name
             },
             fields=["parent", "allocated_amount", "outstanding_amount"]
         )
         if not payment_refs:
             continue
+
         payment_entries = frappe.get_all(
             "Payment Entry",
             filters={
@@ -105,6 +110,7 @@ def get_data(filters=None):
             fields=["name", "posting_date"],
             order_by="posting_date asc"
         )
+
         ref_map = {ref.parent: ref for ref in payment_refs}
 
         for i, pe in enumerate(payment_entries):
@@ -112,13 +118,14 @@ def get_data(filters=None):
             ref = ref_map.get(pe.name)
 
             rows.append({
-                "customer": si.customer if is_first else "",
-                "sales_invoice_date": si.posting_date if is_first else "",
-                "sales_invoice": si.name if is_first else "",
+                "supplier": pi.supplier if is_first else "",
+                "purchase_invoice_date": pi.posting_date if is_first else "",
+                "purchase_invoice": pi.name if is_first else "",
                 "payment_entry": pe.name,
                 "posting_date": pe.posting_date,
                 "paid_amount": ref.allocated_amount if ref else 0,
                 "outstanding_amount": ref.outstanding_amount if ref else 0,
-                "si_total": si.rounded_total if is_first else 0,
+                "pi_total": pi.rounded_total if is_first else 0,
             })
+
     return rows
